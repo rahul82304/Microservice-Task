@@ -1,0 +1,71 @@
+version: '3.9'
+
+services:
+  micro-sender:
+    build: ./micro-sender
+    container_name: micro-sender
+    networks:
+      - sender
+    ports:
+      - "8081:8081"
+    depends_on:
+      rabbitmq :
+        condition: service_healthy
+
+  micro-recipient:
+    build: ./micro-recipient
+    container_name: micro-recipient
+    networks:
+      - recipient
+    ports:
+      - "8082:8082"
+    depends_on:
+      rabbitmq :
+        condition: service_healthy
+
+  micro-collector:
+    build: ./micro-collector
+    container_name: micro-collector
+    networks:
+      - recipient
+    ports:
+      - "8083:8083"
+    depends_on:
+      rabbitmq :
+        condition: service_healthy
+
+  rabbitmq:
+    image: rabbitmq:management
+    networks:
+      - sender
+      - recipient
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    healthcheck:
+      test: ["CMD-SHELL", "rabbitmqctl status"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+  prometheus:
+    image: prom/prometheus
+    container_name: prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+    networks:
+      - sender
+      - recipient
+  grafana:
+    image: grafana/grafana
+    container_name: grafana
+    ports:
+      - "3000:3000"
+    networks:
+      - sender
+      - recipient
+
+networks:
+  sender:
+  recipient:
