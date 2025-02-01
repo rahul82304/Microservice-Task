@@ -1,0 +1,12 @@
+# micro-sender-service-sender.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: micro-sender
+spec:
+  selector:
+    app: micro-sender
+  ports:
+    - port: 8081
+      targetPort: 8081
+  type: ClusterIP

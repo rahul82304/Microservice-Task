@@ -1,0 +1,13 @@
+# micro-collector-service-collector.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: micro-collector
+spec:
+  selector:
+    app: micro-collector
+    version: v2
+  ports:
+    - port: 8083
+      targetPort: 8083
+  type: ClusterIP

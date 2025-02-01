@@ -1,0 +1,29 @@
+spring:
+  application:
+    name: micro-visualizer
+  datasource:
+    url: jdbc:postgresql://localhost:5432/collectorDb
+    username: user
+    password: password
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
+
+management:
+  endpoints:
+    web:
+      base-path: /actuator
+      exposure:
+        include: prometheus, metrics, health
+  endpoint:
+    prometheus:
+      access: unrestricted
+    metrics:
+      access: unrestricted
+
+server:
+  port: 8084

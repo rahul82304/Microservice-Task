@@ -1,0 +1,23 @@
+spring:
+  application:
+    name: micro-sender
+  rabbitmq:
+    host: rabbitmq
+    port: 5672
+    username: guest
+    password: guest
+
+management:
+  endpoints:
+    web:
+      base-path: /actuator
+      exposure:
+        include: prometheus
+  endpoint:
+    prometheus:
+      access: unrestricted
+    metrics:
+      access: unrestricted
+
+server:
+  port: 8081

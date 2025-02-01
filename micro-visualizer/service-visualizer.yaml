@@ -1,0 +1,12 @@
+# micro-visualizer-service-visualizer.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: micro-visualizer
+spec:
+  selector:
+    app: micro-visualizer
+  ports:
+    - port: 8084
+      targetPort: 8084
+  type: ClusterIP

@@ -1,0 +1,27 @@
+# micro-visualizer-deployment-visualizer.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: micro-visualizer
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: micro-visualizer
+  template:
+    metadata:
+      labels:
+        app: micro-visualizer
+    spec:
+      containers:
+        - name: micro-visualizer
+          image: rahul3114/micro-visualizer:latest
+          ports:
+            - containerPort: 8084
+          env:
+            - name: SPRING_DATASOURCE_URL
+              value: "jdbc:postgresql://postgres:5432/collectorDb"
+            - name: SPRING_DATASOURCE_USERNAME
+              value: "user"
+            - name: SPRING_DATASOURCE_PASSWORD
+              value: "password"

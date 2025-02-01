@@ -1,0 +1,25 @@
+# micro-recipient-deployment-recipient.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: micro-recipient
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: micro-recipient
+  template:
+    metadata:
+      labels:
+        app: micro-recipient
+    spec:
+      containers:
+        - name: micro-recipient
+          image: rahul3114/micro-recipient:latest
+          ports:
+            - containerPort: 8082
+          env:
+            - name: SPRING_RABBITMQ_HOST
+              value: "rabbitmq"
+            - name: SPRING_RABBITMQ_PREFETCH
+              value: "1"

@@ -1,0 +1,32 @@
+# micro-collector-deployment-collector-green.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: micro-collector-green
+  labels:
+    app: micro-collector
+    version: v2
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: micro-collector
+      version: v2
+  template:
+    metadata:
+      labels:
+        app: micro-collector
+        version: v2
+    spec:
+      containers:
+        - name: micro-collector
+          image: rahul3114/micro-collector:v2
+          ports:
+            - containerPort: 8083
+          env:
+            - name: SPRING_DATASOURCE_URL
+              value: "jdbc:postgresql://postgres:5432/collectorDb"
+            - name: SPRING_DATASOURCE_USERNAME
+              value: "user"
+            - name: SPRING_DATASOURCE_PASSWORD
+              value: "password"
